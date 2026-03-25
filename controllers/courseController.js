@@ -48,6 +48,25 @@ async function getStats(req, res) {
   }
 }
 
+// GET /api/courses/:id
+// Get a single course by id from URL path parameter
+async function getById(req, res) {
+  try {
+    const { id } = req.params;
+    const numericId = parseInt(id, 10);
+    if (Number.isNaN(numericId)) {
+      return res.status(400).json({ error: 'Invalid course id' });
+    }
+
+    const courses = await dataStore.readAll();
+    const course = courses.find(c => c.id === numericId);
+    if (!course) return res.status(404).json({ error: 'Course not found' });
+    return res.json(course);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to read course' });
+  }
+}
+
 // GET /api/courses
 // - If query param id is provided, return that specific course
 // - Otherwise, return all courses

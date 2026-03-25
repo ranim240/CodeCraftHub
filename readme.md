@@ -97,6 +97,18 @@ Endpoints and behavior:
   - Delete a course
   - ID is provided in the URL: /api/courses/:id
   - Response: 204 No Content on success
+- GET /api/courses/stats
+  - Get statistics about courses
+  - Response:
+    - 200 OK with a JSON body containing:
+      {
+        "total": <number_of_courses>,
+        "by_status": {
+          "Not Started": <count>,
+          "In Progress": <count>,
+          "Completed": <count>
+        }
+      }
 
 Status values for a course:
 - Not Started
